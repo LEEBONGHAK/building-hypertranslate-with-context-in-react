@@ -1,17 +1,13 @@
 import React from 'react';
-import Header from './Header';
-import { UseFuncs } from './context';
+import { useFunc, useSetLang } from './context';
 
-const Screen = () => {
-  const { logUserIn, logUserOut } = UseFuncs();
+export default () => {
+  const setLang = useSetLang();
+  const { hyperTanslate } = useFunc();
   return (
-    <div>
-      <Header />
-      <h1>First screen</h1>
-      <button onClick={logUserIn}>Log In</button>
-      <button onClick={logUserOut}>Log Out</button>
-    </div>
+    <>
+      <h1>{hyperTanslate("Hello!")}</h1>
+      <button onClick={() => setLang("es")}>Translate Spanish</button>
+    </>
   );
 };
-
-export default Screen;

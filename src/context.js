@@ -1,30 +1,30 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, createContext } from 'react';
 
 // context : 어플리케이션의 데이터 저장소
-const UserContext = React.createContext();
+const LangContext = createContext();
 
-const UserContextProvider = ({children}) => {
-  const [user, setUser] = useState({
-    name: "BongHak",
-    loggedIn: false
-  });
-  const logUserIn = () => setUser({ ...user, loggedIn: true });
-  const logUserOut = () => setUser({ ...user, loggedIn: false });
+const Lang = ({ defaultLang, children, translations }) => {
+  const [lang, setLang] = useState(defaultLang);
+  const hyperTanslate = (text) => {
+    if (lang === defaultLang) {
+      return text;
+    }
+  }
   return (
-    <UserContext.Provider value={{ user, func: { logUserIn, logUserOut } }}>
+    <LangContext.Provider value={{ setLang, func: { hyperTanslate } }}>
       {children}
-    </UserContext.Provider>
+    </LangContext.Provider>
   );
 };
 
-export const UseUser = () => {
-  const { user } = useContext(UserContext);
-  return user;
+export const useSetLang = () => {
+  const { setLang } = useContext(LangContext);
+  return setLang;
 };
 
-export const UseFuncs = () => {
-  const { func } = useContext(UserContext);
+export const useFunc = () => {
+  const { func } = useContext(LangContext);
   return func;
-}
+};
 
-export default UserContextProvider;
+export default Lang;
