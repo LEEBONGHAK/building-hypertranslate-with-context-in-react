@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 // context : 어플리케이션의 데이터 저장소
-export const UserContext = React.createContext();
+const UserContext = React.createContext();
 
 const UserContextProvider = ({children}) => {
   const [user, setUser] = useState({
@@ -12,10 +11,20 @@ const UserContextProvider = ({children}) => {
   const logUserIn = () => setUser({ ...user, loggedIn: true });
   const logUserOut = () => setUser({ ...user, loggedIn: false });
   return (
-    <UserContext.Provider value={{ user, logUserIn, logUserOut }}>
+    <UserContext.Provider value={{ user, func: { logUserIn, logUserOut } }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+export const UseUser = () => {
+  const { user } = useContext(UserContext);
+  return user;
+};
+
+export const UseFuncs = () => {
+  const { func } = useContext(UserContext);
+  return func;
+}
 
 export default UserContextProvider;

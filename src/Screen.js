@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { UserContext } from './context';
+import React from 'react';
 import Header from './Header';
+import { UseFuncs } from './context';
 
 const Screen = () => {
-  const { logUserIn, logUserOut } = useContext(UserContext);
+  const { logUserIn, logUserOut } = UseFuncs();
   return (
     <div>
       <Header />
